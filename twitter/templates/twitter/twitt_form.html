@@ -1,0 +1,23 @@
+{% extends 'main-base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Create-Update
+{% endblock %}
+
+{% block main %}
+    <form action="" class="d-flex flex-column justify-content-center align-items-center" method="post">
+        {% csrf_token %}
+        {{ form | crispy }} 
+        <div>
+            <input type="submit" class="btn btn-primary mt-3">
+            <button type="button" onclick="navigateToLink()" class="btn btn-secondary mt-3">Back</button>
+        </div>           
+    </form>
+
+    <script>
+        function navigateToLink() {
+            window.location.href = "{% url 'twitter:list' %}";
+        }
+    </script>
+{% endblock %}
