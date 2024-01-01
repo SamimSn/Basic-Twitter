@@ -40,17 +40,16 @@ class RegisterView(View):
         })
     
     def post(self, req):                
-        username = req.POST.get('username')
-        email = req.POST.get('email')
+        username = req.POST.get('username')        
         password = req.POST.get('password')
         
-        if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
-            user = User.objects.create_user(username, email, password)
+        if not User.objects.filter(username=username).exists():
+            user = User.objects.create_user(username=username, password=password)
             user.save()
             return redirect(reverse_lazy('login'))        
         else:
             return render(req, 'registration/register.html', {
-                'msg': 'username or email already taken.',
+                'msg': 'username already taken.',
                 'form': Register()
             })      
 
