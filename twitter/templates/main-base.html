@@ -4,12 +4,12 @@
 <div class="d-flex flex-column">
 	<div class="container bg-dark text-white d-flex justify-content-between align-items-center p-3">
 		{% if user.is_authenticated %}
-		<div class="d-flex flex-column justify-content-center align-items-end">
-			<h1 class="m-0">Welcome, {{ user.username }}</h1>					
-			<h4 class="m-0"><a href="{% url 'twitter:create' %}" class="link-success link-offset-1 fs-5 link-underline-opacity-25 link-underline-opacity-100-hover">Post</a></h4>
-		</div>			
-			<a href="{% url 'logout' %}?next={% url 'twitter:list' %}"
-				class="link-light link-offset-1 fs-5 link-underline-opacity-25 link-underline-opacity-100-hover">Logout</a>
+			<div class="d-flex flex-column justify-content-center align-items-end">
+				<h1 class="m-0">Welcome, {{ user.username }}</h1>					
+				<h4 class="m-0"><a href="{% url 'twitter:create' %}" class="link-success link-offset-1 fs-5 link-underline-opacity-25 link-underline-opacity-100-hover">Post</a></h4>
+			</div>			
+				<a href="{% url 'logout' %}?next={% url 'twitter:list' %}"
+					class="link-light link-offset-1 fs-5 link-underline-opacity-25 link-underline-opacity-100-hover">Logout</a>
 		{% else %}
 			<a href="{% url 'login' %}?next={% url 'twitter:list' %}"
 				class="link-light link-offset-1 fs-5 link-underline-opacity-25 link-underline-opacity-100-hover">Login</a>

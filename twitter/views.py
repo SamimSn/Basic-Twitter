@@ -1,7 +1,4 @@
-from math import e
-from typing import Any, override
-from django.db.models.query import QuerySet
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -10,7 +7,8 @@ from .models import Twitt
 
 from django.contrib.auth.models import User
 from .forms import Register
-from twitter import owner
+
+from django.contrib import messages
 
 # Create your views here.
 
@@ -42,21 +40,22 @@ class RegisterView(View):
     def post(self, req):                
         form = Register(req.POST)
                 
-        if form.is_valid():
-            # user = User.objects.create_user(username=username, password=password)
-            # user.save()
-            form.save()
+        if form.is_valid():            
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = User.objects.create_user(username=username, password=password)         
+            user.save()
+            messages.success(req, 'user has been added successfully')
             return redirect(reverse_lazy('login'))        
-        else:
-            return render(req, 'registration/register.html', {
-                'msg': 'username already taken.',
+        else:            
+            messages.warning(req, f'{form.errors}')
+            return render(req, 'registration/register.html', {                
                 'form': Register()
             })      
 
 
 class UserTwittsListView(OwnerListView):
-    model = Twitt    
-    template_name = 'twitter/user'
+    model = Twitt        
         
     def get_queryset(self):
         username = self.kwargs.get('username')
@@ -68,4 +67,4 @@ class UserTwittsListView(OwnerListView):
         # Add extra context data
         context['user_twitts_list'] = True 
         context['username'] = self.kwargs.get('username')       
-        return context
+        return context  

@@ -11,7 +11,7 @@ urlpatterns = [
     path('<int:pk>/update/', views.TwittUpdateView.as_view(success_url=reverse_lazy('twitter:list')), name='update'),
     path('<int:pk>/delete/', views.TwittDeleteView.as_view(success_url=reverse_lazy('twitter:list')), name='delete'),
     
-    path('create/', views.TwittCreateView.as_view(success_url=reverse_lazy('twitter:list')), name='create'),
+    path('create/', views.TwittCreateView.as_view(success_url=reverse_lazy('twitter:list')), name='create'),    
     
     path('<str:username>/', views.UserTwittsListView.as_view(), name='user_twitts_list'),
     

@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block main %}    
+    {% if messages %}   
+        {% for message in messages %}                                                     
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>                                                            
+        {% endfor %}
+    {% endif %}
     <h1>
         {% if user_twitts_list %}
             {% for twitt in twitt_list %}                
@@ -18,7 +26,7 @@
             {% endfor %}
         {% endif %}
         Twitts
-    </h1>    
+    </h1>        
     <ul class="list-group list-group-flush"></ul>
         {% for twitt in twitt_list %}                
             {% if twitt.owner == request.user %}                
@@ -27,9 +35,9 @@
                 <li class="list-group-item list-group-item-secondary p-3 rounded-2 m-1 fs-5 w-100 text-break"><a href="{% url 'twitter:user_twitts_list' twitt.owner %}" class="link-dark link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover">{{ twitt.owner }}</a> : <a href="{% url 'twitter:detail' twitt.id %}" class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">{{ twitt.text }}</a></li>
             {% endif %}            
         {% empty %}
-            <ul class="list-group list-group-flush">        
-                <li class="list-group-item list-group-item-danger p-4 rounded-2 m-1 fs-3">No Twitts Yet</li>                
-            </ul>
+            <div class="alert alert-danger" role="alert">
+                No Twitts Yet
+            </div>
         {% endfor %}        
     </ul>
     {% if user_twitts_list %}

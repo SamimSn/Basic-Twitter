@@ -7,9 +7,4 @@ class Register(ModelForm):
         fields = ['username', 'password']
         help_texts = {
             'username': None,  # Set the help text for the username field to None
-        }
-        
-            
-    
-    
-
+        }  
