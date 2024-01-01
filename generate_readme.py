@@ -13,6 +13,6 @@ with open('README.md', 'w') as readme_file:
     for package in django_packages:
         readme_file.write(f'- {package}\n')
     readme_file.write('\n## Run these commands as follows on the root directory of the project:\n\n')
-    readme_file.write('- python manage.py makemigrations\n')
-    readme_file.write('- python manage.py migrate\n')
-    readme_file.write('- python manage.py runserver\n')
+    readme_file.write('```diff\n+ python manage.py makemigrations\n')
+    readme_file.write('+ python manage.py migrate\n')
+    readme_file.write('+ python manage.py runserver\n```')

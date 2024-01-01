@@ -7,9 +7,12 @@
 - django-extensions==3.2.3
 - django-taggit==5.0.1
 - djangorestframework==3.14.0
-  
-## Run these commands as follows on the root directory of the project
+- social-auth-app-django==5.4.0
 
-- python manage.py makemigrations
-- python manage.py migrate
-- python manage.py runserver
+## Run these commands as follows on the root directory of the project:
+
+```diff
++ python manage.py makemigrations
++ python manage.py migrate
++ python manage.py runserver
+```
