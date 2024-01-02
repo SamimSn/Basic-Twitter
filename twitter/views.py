@@ -1,14 +1,9 @@
-from django.urls import reverse, reverse_lazy
-from django.views import View
-from django.shortcuts import get_object_or_404, render, redirect
-
-from .owner import OwnerCreateView, OwnerUpdateView, OwnerDeleteView, OwnerListView, OwnerDetailView
-from .models import Twitt
-
+from .owner import OwnerCreateView, OwnerUpdateView, OwnerDeleteView, OwnerListView, OwnerDetailView, CreateView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from .forms import Register
-
-from django.contrib import messages
+from .models import Twitt
 
 # Create your views here.
 
@@ -27,31 +22,20 @@ class TwittListView(OwnerListView):
     model = Twitt
     
 class TwittDetailView(OwnerDetailView):
-    model = Twitt    
+    model = Twitt   
 
-
-class RegisterView(View):    
+class RegisterView(SuccessMessageMixin ,CreateView):    
+    model = User
+    template_name = 'registration/register.html'    
+    form_class =  UserCreationForm 
     
-    def get(self, req):
-        return render(req, 'registration/register.html', {
-            'form': Register()          
-        })
+    success_message = "user have been added successfully"
     
-    def post(self, req):                
-        form = Register(req.POST)
-                
-        if form.is_valid():            
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = User.objects.create_user(username=username, password=password)         
-            user.save()
-            messages.success(req, 'user has been added successfully')
-            return redirect(reverse_lazy('login'))        
-        else:            
-            messages.warning(req, f'{form.errors}')
-            return render(req, 'registration/register.html', {                
-                'form': Register()
-            })      
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)        
+        for field in form.fields.keys():
+            form[field].help_text = None
+        return form                        
 
 
 class UserTwittsListView(OwnerListView):
@@ -63,8 +47,7 @@ class UserTwittsListView(OwnerListView):
         return Twitt.objects.filter(owner=user)
     
     def get_context_data(self, **kwargs):
-        context = super(UserTwittsListView, self).get_context_data(**kwargs)
-        # Add extra context data
+        context = super(UserTwittsListView, self).get_context_data(**kwargs)        
         context['user_twitts_list'] = True 
         context['username'] = self.kwargs.get('username')       
         return context  
