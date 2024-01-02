@@ -1,3 +1,4 @@
+from typing import Any
 from django.http import HttpResponseRedirect
 from .owner import OwnerCreateView, OwnerUpdateView, OwnerDeleteView, OwnerListView, OwnerDetailView, CreateView
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView, CreateView
@@ -26,10 +27,21 @@ class TwittDeleteView(SuccessMessageMixin, OwnerDeleteView):
     success_message = "Twitt deleted"
     
 class TwittListView(OwnerListView):
-    model = Twitt
-    
+    model = Twitt                               
+            
 class TwittDetailView(OwnerDetailView):
-    model = Twitt   
+    model = Twitt          
+    
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        
+        likes_connected = get_object_or_404(Twitt, id=self.kwargs['pk'])
+        liked = False
+        if likes_connected.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        data['number_of_likes'] = likes_connected.number_of_likes()
+        data['post_is_liked'] = liked
+        return data
 
 class RegisterView(SuccessMessageMixin ,CreateView):    
     model = User
@@ -58,25 +70,13 @@ class UserTwittsListView(OwnerListView):
         return context  
     
     
-def twitt_like(request):    
-    post = get_object_or_404(Twitt, id=request.POST.get('twitt_id'))
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
+def twitt_like(request, pk):        
+    twitt = get_object_or_404(Twitt, id=pk)
+    if twitt.likes.filter(id=request.user.id).exists():
+        twitt.likes.remove(request.user)
+        print('removed')
     else:
-        post.likes.add(request.user)  
-    return redirect(reverse_lazy('twitter:list'))     
-    
-class TwittLikeView(DetailView):
-    model = Twitt    
-    
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        
-        likes_connected = get_object_or_404(Twitt, id=self.kwargs['pk'])
-        liked = False
-        if likes_connected.likes.filter(id=self.request.user.id).exists():
-            liked = True
-        data['number_of_likes'] = likes_connected.number_of_likes()
-        data['post_is_liked'] = liked
-        return data
+        twitt.likes.add(request.user)  
+        print('added')
+    return redirect(request.META.get('HTTP_REFERER', reverse_lazy('twitter:list')))         
     

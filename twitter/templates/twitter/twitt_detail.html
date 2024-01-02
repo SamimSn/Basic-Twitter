@@ -7,9 +7,23 @@
 
 {% block main %}
     {% if twitt.owner == request.user %}
-        <li class="list-group-item list-group-item-primary p-3 rounded-2 m-1 fs-5 w-100 text-break">You : {{ twitt.text }} | Created {{ twitt.created_time | naturaltime }} | Updated {{ twitt.updated_time | naturaltime }} ( <a href="{% url 'twitter:update' twitt.id %}" class="link-primary link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover">Update</a> | <a href="{% url 'twitter:delete' twitt.id %}" class="link-danger link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover">Delete</a> )</li>    
+        <div class="w-100 d-flex">
+            <li class="list-group-item list-group-item-primary p-3 rounded-2 m-1 fs-5 w-100 text-break">You : {{ twitt.text }} | Created {{ twitt.created_time | naturaltime }} | Updated {{ twitt.updated_time | naturaltime }} ( <a href="{% url 'twitter:update' twitt.id %}" class="link-primary link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover">Update</a> | <a href="{% url 'twitter:delete' twitt.id %}" class="link-danger link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover">Delete</a> )</li>        
+            {% if post_is_liked %}                    
+                <a href="{% url 'twitter:like' twitt.id %}" class="btn btn-success m-1 d-flex justify-content-center align-items-center">like</a>                    
+            {% else %}                    
+                <a href="{% url 'twitter:like' twitt.id %}" class="btn btn-secondary m-1 d-flex justify-content-center align-items-center">like</a>                    
+            {% endif %}
+        </div>
     {% else %}
-        <li class="list-group-item list-group-item-secondary p-3 rounded-2 m-1 fs-5 w-100 text-break">{{ twitt.owner }} : {{ twitt.text }} | Created {{ twitt.created_time | naturaltime }} | Updated {{ twitt.updated_time | naturaltime }}</li>    
+        <div class="w-100 d-flex">
+            <li class="list-group-item list-group-item-secondary p-3 rounded-2 m-1 fs-5 w-100 text-break">{{ twitt.owner }} : {{ twitt.text }} | Created {{ twitt.created_time | naturaltime }} | Updated {{ twitt.updated_time | naturaltime }}</li>    
+            {% if post_is_liked %}                    
+                <a href="{% url 'twitter:like' twitt.id %}" class="btn btn-success m-1 d-flex justify-content-center align-items-center">like</a>                    
+            {% else %}                    
+                <a href="{% url 'twitter:like' twitt.id %}" class="btn btn-secondary m-1 d-flex justify-content-center align-items-center">like</a>                    
+            {% endif %}
+        </div>
     {% endif %}
     <button type="button" onclick="navigateToLink()" class="btn btn-secondary mt-3">Back</button>
 
