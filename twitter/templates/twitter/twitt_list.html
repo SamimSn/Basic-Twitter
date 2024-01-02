@@ -4,27 +4,29 @@
     Twitts
 {% endblock %}
 
-{% block main %}    
+{% block main %}        
+    <h1 class="display-2 mb-3 border-bottom">       
+        {% if user_twitts_list %}         
+            {% for twitt in twitt_list %}                
+                {% if forloop.first %}
+                    {% if twitt.owner == request.user %}
+                        Your   
+                    {% else %}
+                        {{ twitt.owner }}'s
+                    {% endif %}
+                {% endif %}
+            {% endfor %}                    
+        {% endif %}
+        Twitts
+    </h1>        
     {% if messages %}   
         {% for message in messages %}                                                     
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>                                                            
         {% endfor %}
     {% endif %}
-    <h1>        
-        {% for twitt in twitt_list %}                
-            {% if forloop.first %}
-                {% if twitt.owner == request.user %}
-                    Your   
-                {% else %}
-                    {{ username }}'s
-                {% endif %}
-            {% endif %}
-        {% endfor %}        
-        Twitts
-    </h1>        
     <ul class="list-group list-group-flush"></ul>
         {% for twitt in twitt_list %}                
             {% if twitt.owner == request.user %}                

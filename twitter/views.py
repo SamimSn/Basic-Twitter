@@ -7,16 +7,19 @@ from .models import Twitt
 
 # Create your views here.
 
-class TwittCreateView(OwnerCreateView):
+class TwittCreateView(SuccessMessageMixin, OwnerCreateView):
     model = Twitt
     fields = ['text']
+    success_message = "Twitt created"
     
-class TwittUpdateView(OwnerUpdateView):
+class TwittUpdateView(SuccessMessageMixin, OwnerUpdateView):
     model = Twitt
     fields = ['text']    
+    success_message = "Twitt updated"
     
-class TwittDeleteView(OwnerDeleteView):
+class TwittDeleteView(SuccessMessageMixin, OwnerDeleteView):
     model = Twitt    
+    success_message = "Twitt deleted"
     
 class TwittListView(OwnerListView):
     model = Twitt
@@ -27,9 +30,8 @@ class TwittDetailView(OwnerDetailView):
 class RegisterView(SuccessMessageMixin ,CreateView):    
     model = User
     template_name = 'registration/register.html'    
-    form_class =  UserCreationForm 
-    
-    success_message = "user have been added successfully"
+    form_class =  UserCreationForm     
+    success_message = "User added"
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)        
@@ -48,6 +50,5 @@ class UserTwittsListView(OwnerListView):
     
     def get_context_data(self, **kwargs):
         context = super(UserTwittsListView, self).get_context_data(**kwargs)        
-        # context['user_twitts_list'] = True 
-        context['username'] = self.kwargs.get('username')       
+        context['user_twitts_list'] = True               
         return context  
