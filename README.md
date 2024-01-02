@@ -12,6 +12,8 @@
 ## Run these commands as follows on the root directory of the project:
 
 ```diff
++ pip install django-crispy-forms
++ pip install crispy-bootstrap4
 + python manage.py makemigrations
 + python manage.py migrate
 + python manage.py runserver
