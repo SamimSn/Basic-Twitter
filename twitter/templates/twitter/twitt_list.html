@@ -13,18 +13,16 @@
             </div>                                                            
         {% endfor %}
     {% endif %}
-    <h1>
-        {% if user_twitts_list %}
-            {% for twitt in twitt_list %}                
-                {% if forloop.first %}
-                    {% if twitt.owner == request.user %}
-                        Your   
-                    {% else %}
-                        {{ username }}'s
-                    {% endif %}
+    <h1>        
+        {% for twitt in twitt_list %}                
+            {% if forloop.first %}
+                {% if twitt.owner == request.user %}
+                    Your   
+                {% else %}
+                    {{ username }}'s
                 {% endif %}
-            {% endfor %}
-        {% endif %}
+            {% endif %}
+        {% endfor %}        
         Twitts
     </h1>        
     <ul class="list-group list-group-flush"></ul>
