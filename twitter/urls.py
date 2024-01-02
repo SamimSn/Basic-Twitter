@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'twitter'
 urlpatterns = [   
-    path('register/', views.RegisterView.as_view(), name = 'register'),
+    path('register/', views.RegisterView.as_view(success_url=reverse_lazy('login')), name = 'register'),
     
     path('', views.TwittListView.as_view(), name='list'),    
     path('<int:pk>/', views.TwittDetailView.as_view(), name='detail'),    

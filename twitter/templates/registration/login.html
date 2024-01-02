@@ -21,7 +21,7 @@
                     {% endfor %}
                 {% endif %}                
                 {{ form | crispy }}
-                <p class="m-2">Don't have an account? <a href="{% url 'twitter:register' %}?next={{ request.path }}">Sign up</a></p>
+                <p class="m-2">Don't have an account? <a href="{% url 'twitter:register' %}">Sign up</a></p>
                 <input type="submit" class="btn btn-primary mt-4" value="Login">                
             </form>
         </div>
