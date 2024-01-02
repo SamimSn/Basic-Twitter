@@ -48,6 +48,6 @@ class UserTwittsListView(OwnerListView):
     
     def get_context_data(self, **kwargs):
         context = super(UserTwittsListView, self).get_context_data(**kwargs)        
-        context['user_twitts_list'] = True 
+        # context['user_twitts_list'] = True 
         context['username'] = self.kwargs.get('username')       
         return context  
