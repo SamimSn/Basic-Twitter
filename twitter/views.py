@@ -35,11 +35,11 @@ class TwittDetailView(OwnerDetailView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         
-        likes_connected = get_object_or_404(Twitt, id=self.kwargs['pk'])
+        twitt = get_object_or_404(Twitt, id=self.kwargs['pk'])
         liked = False
-        if likes_connected.likes.filter(id=self.request.user.id).exists():
+        if twitt.likes.filter(id=self.request.user.id).exists():
             liked = True
-        data['number_of_likes'] = likes_connected.number_of_likes()
+        data['number_of_likes'] = twitt.number_of_likes()
         data['post_is_liked'] = liked
         return data
 
