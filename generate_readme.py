@@ -7,14 +7,6 @@ output = subprocess.check_output(['pip', 'freeze']).decode('utf-8')
 django_packages = [line.strip() for line in output.split('\n') if 'django' in line.lower()]
 
 # Write the Django packages to README.md
-with open('README.md', 'w') as readme_file:
-    readme_file.write('# Django Project README\n\n')
-    readme_file.write('## Third-Party Apps\n\n')
+with open('requirements.txt', 'w') as readme_file:    
     for package in django_packages:
-        readme_file.write(f'- {package}\n')
-    readme_file.write('\n## Run these commands as follows on the root directory of the project:\n\n')
-    readme_file.write('```diff\n+ pip install django-crispy-forms\n')
-    readme_file.write('+ pip install crispy-bootstrap4\n')
-    readme_file.write('+ python manage.py makemigrations\n')
-    readme_file.write('+ python manage.py migrate\n')
-    readme_file.write('+ python manage.py runserver\n```')
+        readme_file.write(f'{package}\n')    

@@ -36,10 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
+    'django.contrib.humanize',
     'crispy_forms',
     'crispy_bootstrap4',
-    'django.contrib.humanize',
     
     # APPS
     
@@ -131,4 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = '/twitter/'
+LOGIN_REDIRECT_URL = 'twitter:list'
+LOGOUT_REDIRECT_URL = 'login'
